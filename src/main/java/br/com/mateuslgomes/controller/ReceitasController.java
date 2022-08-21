@@ -6,20 +6,24 @@ import br.com.mateuslgomes.repository.ReceitasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/receitas")
 public class ReceitasController {
 
     @Autowired
     ReceitasRepository receitasRepository;
+
+    @RequestMapping
+    public List<Receitas> receitas() {
+        return receitasRepository.findAll();
+    }
 
     @PostMapping
     public ResponseEntity<Receitas> saveReceita(@RequestBody @Valid ReceitaDto dto, UriComponentsBuilder uriBuilder) {
