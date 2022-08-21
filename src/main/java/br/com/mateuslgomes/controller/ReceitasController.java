@@ -12,6 +12,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/receitas")
@@ -19,6 +20,12 @@ public class ReceitasController {
 
     @Autowired
     ReceitasRepository receitasRepository;
+
+    @RequestMapping(path = "{id}")
+    public ResponseEntity<Receitas> receita(@PathVariable Long id) {
+        Optional<Receitas> receita = receitasRepository.findById(id);
+        return receita.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
     @RequestMapping
     public List<Receitas> receitas() {
