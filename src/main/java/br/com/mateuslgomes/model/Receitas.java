@@ -1,8 +1,12 @@
 package br.com.mateuslgomes.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity @Table(name = "receitas")
 public class Receitas {
@@ -10,25 +14,30 @@ public class Receitas {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long descricao;
+    @NotBlank @NotNull @NotEmpty
+    private String descricao;
 
+    @NotNull
     private BigDecimal valor;
 
-    private Date data;
+    private final LocalDateTime dataReceita = LocalDateTime.now();
+
+    public Receitas(){}
+
+    public Receitas(String descricao, BigDecimal valor) {
+        this.descricao = descricao;
+        this.valor = valor;
+    }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getDescricao() {
+    public String getDescricao() {
         return descricao;
     }
 
-    public void setDescricao(Long descricao) {
+    public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
 
@@ -40,11 +49,9 @@ public class Receitas {
         this.valor = valor;
     }
 
-    public Date getData() {
-        return data;
+    public String getData() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        return dataReceita.format(formatter);
     }
 
-    public void setData(Date data) {
-        this.data = data;
-    }
 }
