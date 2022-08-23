@@ -20,7 +20,7 @@ public class Receitas {
     @NotNull
     private BigDecimal valor;
 
-    private final LocalDateTime dataReceita = LocalDateTime.now();
+    private LocalDateTime dataReceita = LocalDateTime.now();
 
     public Receitas(){}
 
@@ -47,6 +47,10 @@ public class Receitas {
 
     public void setValor(BigDecimal valor) {
         this.valor = valor;
+    }
+
+    public void setDataReceita(LocalDateTime dataReceita) {
+        this.dataReceita = dataReceita;
     }
 
     public String getData() {

@@ -5,7 +5,6 @@ import br.com.mateuslgomes.model.Receitas;
 import br.com.mateuslgomes.repository.ReceitasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -25,6 +24,13 @@ public class ReceitasController {
     public ResponseEntity<Receitas> receita(@PathVariable Long id) {
         Optional<Receitas> receita = receitasRepository.findById(id);
         return receita.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PutMapping(path = "{id}")
+    public ResponseEntity<Receitas> updateReceita(@PathVariable Long id, @RequestBody @Valid ReceitaDto dto) {
+        Receitas receita = dto.update(receitasRepository, id);
+        receitasRepository.save(receita);
+        return ResponseEntity.ok(receita);
     }
 
     @RequestMapping
