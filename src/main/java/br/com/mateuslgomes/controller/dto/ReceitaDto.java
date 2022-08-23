@@ -29,10 +29,13 @@ public class ReceitaDto {
 
     public Receitas update(ReceitasRepository receitasRepository, Long id) {
         Optional<Receitas> receitaOptiontal = receitasRepository.findById(id);
-        Receitas receita = receitaOptiontal.get();
-        receita.setValor(this.valor);
-        receita.setDescricao(this.descricao);
-        receita.setDataReceita(dataReceita);
-        return receita;
+        if (receitaOptiontal.isPresent()) {
+            Receitas receita = receitaOptiontal.get();
+            receita.setValor(this.valor);
+            receita.setDescricao(this.descricao);
+            receita.setDataReceita(dataReceita);
+            return receita;
+        }
+        return null;
     }
 }

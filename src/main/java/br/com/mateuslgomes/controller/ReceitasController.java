@@ -26,11 +26,24 @@ public class ReceitasController {
         return receita.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @DeleteMapping(path = "{id}")
+    public ResponseEntity<Receitas> deleteReceita(@PathVariable Long id) {
+        Optional<Receitas> receita = receitasRepository.findById(id);
+        if (receita.isPresent()) {
+            receitasRepository.delete(receita.get());
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
     @PutMapping(path = "{id}")
     public ResponseEntity<Receitas> updateReceita(@PathVariable Long id, @RequestBody @Valid ReceitaDto dto) {
         Receitas receita = dto.update(receitasRepository, id);
-        receitasRepository.save(receita);
-        return ResponseEntity.ok(receita);
+        if (receita != null) {
+            receitasRepository.save(receita);
+            return ResponseEntity.ok(receita);
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @RequestMapping
@@ -49,5 +62,4 @@ public class ReceitasController {
             return ResponseEntity.badRequest().build();
         }
     }
-
 }
