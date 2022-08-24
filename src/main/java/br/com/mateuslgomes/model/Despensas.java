@@ -59,4 +59,8 @@ public class Despensas {
     public void setData(LocalDateTime data) {
         this.dataReceita = data;
     }
+
+    public void setDataReceita(LocalDateTime dataReceita) {
+        this.dataReceita = dataReceita;
+    }
 }

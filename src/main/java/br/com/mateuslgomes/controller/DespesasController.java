@@ -1,6 +1,7 @@
 package br.com.mateuslgomes.controller;
 
 import br.com.mateuslgomes.controller.dto.DespensaDto;
+import br.com.mateuslgomes.controller.dto.ReceitaDto;
 import br.com.mateuslgomes.model.Despensas;
 import br.com.mateuslgomes.model.Receitas;
 import br.com.mateuslgomes.repository.DespensasRepository;
@@ -25,6 +26,16 @@ public class DespesasController {
     public ResponseEntity<Despensas> despensa(@PathVariable Long id) {
         Optional<Despensas> receita = despensasRepository.findById(id);
         return receita.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PutMapping(path = "{id}")
+    public ResponseEntity<Despensas> updateDespensa(@PathVariable Long id, @RequestBody @Valid ReceitaDto dto) {
+        Despensas despensa = dto.update(despensasRepository, id);
+        if (despensa != null) {
+            despensasRepository.save(despensa);
+            return ResponseEntity.ok(despensa);
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @PostMapping

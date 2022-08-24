@@ -1,6 +1,8 @@
 package br.com.mateuslgomes.controller.dto;
 
+import br.com.mateuslgomes.model.Despensas;
 import br.com.mateuslgomes.model.Receitas;
+import br.com.mateuslgomes.repository.DespensasRepository;
 import br.com.mateuslgomes.repository.ReceitasRepository;
 
 import java.math.BigDecimal;
@@ -38,4 +40,17 @@ public class ReceitaDto {
         }
         return null;
     }
+
+    public Despensas update(DespensasRepository despensasRepository, Long id) {
+        Optional<Despensas> despensasOptional = despensasRepository.findById(id);
+        if (despensasOptional.isPresent()) {
+            Despensas despensas  = despensasOptional.get();
+            despensas.setValor(this.valor);
+            despensas.setDescricao(this.descricao);
+            despensas.setDataReceita(dataReceita);
+            return despensas;
+        }
+        return null;
+    }
 }
+
