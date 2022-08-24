@@ -1,20 +1,32 @@
 package br.com.mateuslgomes.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
-@Entity @Table(name = "despensas")
+@Entity @Table(name = "despesas")
 public class Despensas {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty @NotNull @NotBlank
     private String descricao;
 
+    @NotNull
     private BigDecimal valor;
 
-    private Date data;
+    private LocalDateTime dataReceita = LocalDateTime.now();
+
+    public Despensas(String descricao, BigDecimal valor) {
+        this.descricao = descricao;
+        this.valor = valor;
+    }
+
+    public Despensas(){}
 
     public Long getId() {
         return id;
@@ -40,11 +52,11 @@ public class Despensas {
         this.valor = valor;
     }
 
-    public Date getData() {
-        return data;
+    public LocalDateTime getData() {
+        return dataReceita;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setData(LocalDateTime data) {
+        this.dataReceita = data;
     }
 }
