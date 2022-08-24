@@ -38,6 +38,16 @@ public class DespesasController {
         return ResponseEntity.badRequest().build();
     }
 
+    @DeleteMapping(path = "{id}")
+    public ResponseEntity<Despensas> deleteDespensa(@PathVariable Long id) {
+        Optional<Despensas> despensa = despensasRepository.findById(id);
+        if (despensa.isPresent()) {
+            despensasRepository.delete(despensa.get());
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
     @PostMapping
     public ResponseEntity<Despensas> saveDespensa(@RequestBody @Valid DespensaDto dto, UriComponentsBuilder uriBuilder) {
         try {
