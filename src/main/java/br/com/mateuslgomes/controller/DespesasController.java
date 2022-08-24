@@ -2,7 +2,6 @@ package br.com.mateuslgomes.controller;
 
 import br.com.mateuslgomes.controller.dto.DespensaDto;
 import br.com.mateuslgomes.model.Despensas;
-import br.com.mateuslgomes.model.Receitas;
 import br.com.mateuslgomes.repository.DespensasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/despesas")
@@ -34,4 +34,8 @@ public class DespesasController {
         }
     }
 
+    @RequestMapping
+    public List<Despensas> despensas() {
+        return despensasRepository.findAll();
+    }
 }
