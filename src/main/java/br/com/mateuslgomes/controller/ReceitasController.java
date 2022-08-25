@@ -27,7 +27,7 @@ public class ReceitasController {
     }
 
     @RequestMapping
-    public ResponseEntity<List<Receitas>> receita(@RequestParam(required = false, value = "descricao") String descricao){
+    public ResponseEntity<List<Receitas>> receitas(@RequestParam(required = false, value = "descricao") String descricao){
         if (descricao == null) {
             return ResponseEntity.ok(receitasRepository.findAll());
         }
