@@ -26,6 +26,14 @@ public class ReceitasController {
         return receita.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @RequestMapping
+    public ResponseEntity<List<Receitas>> receita(@RequestParam(required = false, value = "descricao") String descricao){
+        if (descricao == null) {
+            return ResponseEntity.ok(receitasRepository.findAll());
+        }
+        return ResponseEntity.ok(receitasRepository.findByDescricao(descricao));
+    }
+
     @DeleteMapping(path = "{id}")
     public ResponseEntity<Receitas> deleteReceita(@PathVariable Long id) {
         Optional<Receitas> receita = receitasRepository.findById(id);
@@ -44,11 +52,6 @@ public class ReceitasController {
             return ResponseEntity.ok(receita);
         }
         return ResponseEntity.badRequest().build();
-    }
-
-    @RequestMapping
-    public List<Receitas> receitas() {
-        return receitasRepository.findAll();
     }
 
     @PostMapping
