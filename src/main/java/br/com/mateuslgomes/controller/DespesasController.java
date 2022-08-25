@@ -4,6 +4,7 @@ import br.com.mateuslgomes.controller.dto.DespensaDto;
 import br.com.mateuslgomes.controller.dto.ReceitaDto;
 import br.com.mateuslgomes.model.Despensas;
 import br.com.mateuslgomes.model.Receitas;
+import br.com.mateuslgomes.repository.CategoriaRepository;
 import br.com.mateuslgomes.repository.DespensasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,9 @@ public class DespesasController {
 
     @Autowired
     DespensasRepository despensasRepository;
+
+    @Autowired
+    CategoriaRepository categoriaRepository;
 
     @RequestMapping(path = "{id}")
     public ResponseEntity<Despensas> despensa(@PathVariable Long id) {
@@ -51,7 +55,7 @@ public class DespesasController {
     @PostMapping
     public ResponseEntity<Despensas> saveDespensa(@RequestBody @Valid DespensaDto dto, UriComponentsBuilder uriBuilder) {
         try {
-            Despensas despensa = dto.gerarDespensa();
+            Despensas despensa = dto.gerarDespensa(categoriaRepository);
             despensasRepository.save(despensa);
             URI uri = uriBuilder.path("/despesas").buildAndExpand(despensa.getId()).toUri();
             return ResponseEntity.created(uri).body(despensa);
@@ -61,7 +65,7 @@ public class DespesasController {
     }
 
     @RequestMapping
-    public List<Despensas> despensas() {
+    public List<Despensas> receitas() {
         return despensasRepository.findAll();
     }
 }

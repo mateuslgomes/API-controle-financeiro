@@ -47,7 +47,7 @@ public class ReceitaDto {
             Despensas despensas  = despensasOptional.get();
             despensas.setValor(this.valor);
             despensas.setDescricao(this.descricao);
-            despensas.setDataReceita(dataReceita);
+            despensas.setData(dataReceita);
             return despensas;
         }
         return null;
