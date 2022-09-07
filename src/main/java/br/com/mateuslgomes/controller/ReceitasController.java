@@ -43,7 +43,7 @@ public class ReceitasController {
 
     @DeleteMapping(path = "{id}")
     public ResponseEntity<Receitas> deleteReceita(@PathVariable Long id) {
-        return receitaServices.deleteReceita(id);
+        return receitaServices.delete(id);
     }
 
     @PutMapping(path = "{id}")
@@ -53,6 +53,6 @@ public class ReceitasController {
 
     @PostMapping
     public ResponseEntity<Receitas> saveReceita(@RequestBody @Valid ReceitaDto dto, UriComponentsBuilder uriBuilder) {
-        return receitaServices.saveReceita(dto, uriBuilder);
+        return receitaServices.save(dto, uriBuilder);
     }
 }

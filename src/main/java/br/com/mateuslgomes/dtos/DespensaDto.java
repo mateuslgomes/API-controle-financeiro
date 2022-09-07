@@ -23,7 +23,7 @@ public class DespensaDto {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    public Despensas gerarDespensa(CategoriaRepository categoriaRepository) {
+    public Despensas gerar(CategoriaRepository categoriaRepository) {
         if (categoria == null) {
             Optional<Categoria> categoriaOptional = categoriaRepository.findByCategoria(categoria);
             return new Despensas(this.descricao, this.valor, categoriaOptional.get());

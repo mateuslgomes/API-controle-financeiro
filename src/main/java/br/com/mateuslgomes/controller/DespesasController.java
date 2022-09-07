@@ -54,7 +54,7 @@ public class DespesasController {
     @PostMapping
     public ResponseEntity<Despensas> saveDespensa(@RequestBody @Valid DespensaDto dto, UriComponentsBuilder uriBuilder) {
         try {
-            Despensas despensa = dto.gerarDespensa(categoriaRepository);
+            Despensas despensa = dto.gerar(categoriaRepository);
             despensasRepository.save(despensa);
             URI uri = uriBuilder.path("/despesas").buildAndExpand(despensa.getId()).toUri();
             return ResponseEntity.created(uri).body(despensa);
