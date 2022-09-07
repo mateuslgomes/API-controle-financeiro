@@ -1,8 +1,12 @@
 package br.com.mateuslgomes.model;
 
-import javax.persistence.*;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
+
+@Getter
+@Setter
 @Entity @Table(name = "categoria")
 public class Categoria {
 
@@ -16,19 +20,5 @@ public class Categoria {
 
     public Categoria() {}
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public CategoriasEnum getCategorias() {
-        return categorias;
-    }
-
-    public void setCategorias(CategoriasEnum categorias) {
-        this.categorias = categorias;
-    }
 }

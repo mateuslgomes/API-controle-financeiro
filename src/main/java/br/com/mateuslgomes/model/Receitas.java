@@ -1,5 +1,8 @@
 package br.com.mateuslgomes.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -8,6 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@Setter
 @Entity @Table(name = "receitas")
 public class Receitas {
 
@@ -29,12 +33,12 @@ public class Receitas {
         this.valor = valor;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public String getDescricao() {
         return descricao;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public void setDescricao(String descricao) {

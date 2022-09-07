@@ -1,5 +1,8 @@
 package br.com.mateuslgomes.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -8,6 +11,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@Getter
+@Setter
 @Entity @Table(name = "despesas")
 public class Despensas {
 
@@ -41,39 +46,9 @@ public class Despensas {
         return dataReceita.format(formatter);
     }
 
+    public Despensas(){}
+
     public void setData(LocalDateTime dataReceita) {
         this.dataReceita = dataReceita;
     }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
-
-    public Despensas(){}
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public BigDecimal getValor() {
-        return valor;
-    }
-
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
-    }
-
-
 }

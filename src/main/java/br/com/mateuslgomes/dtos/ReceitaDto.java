@@ -1,14 +1,16 @@
-package br.com.mateuslgomes.controller.dto;
+package br.com.mateuslgomes.dtos;
 
 import br.com.mateuslgomes.model.Despensas;
 import br.com.mateuslgomes.model.Receitas;
 import br.com.mateuslgomes.repository.DespensasRepository;
 import br.com.mateuslgomes.repository.ReceitasRepository;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@Getter
 public class ReceitaDto {
 
     private String descricao;
@@ -16,18 +18,6 @@ public class ReceitaDto {
     private BigDecimal valor;
 
     private final LocalDateTime dataReceita = LocalDateTime.now();
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public BigDecimal getValor() {
-        return valor;
-    }
-
-    public Receitas gerarReceita() {
-        return new Receitas(descricao, valor);
-    }
 
     public Receitas update(ReceitasRepository receitasRepository, Long id) {
         Optional<Receitas> receitaOptiontal = receitasRepository.findById(id);

@@ -1,9 +1,8 @@
 package br.com.mateuslgomes.controller;
 
-import br.com.mateuslgomes.controller.dto.DespensaDto;
-import br.com.mateuslgomes.controller.dto.ReceitaDto;
+import br.com.mateuslgomes.dtos.DespensaDto;
+import br.com.mateuslgomes.dtos.ReceitaDto;
 import br.com.mateuslgomes.model.Despensas;
-import br.com.mateuslgomes.model.Receitas;
 import br.com.mateuslgomes.repository.CategoriaRepository;
 import br.com.mateuslgomes.repository.DespensasRepository;
 import org.springframework.beans.factory.annotation.Autowired;

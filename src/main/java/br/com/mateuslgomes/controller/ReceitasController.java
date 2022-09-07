@@ -1,29 +1,36 @@
 package br.com.mateuslgomes.controller;
 
-import br.com.mateuslgomes.controller.dto.ReceitaDto;
+import br.com.mateuslgomes.dtos.ReceitaDto;
 import br.com.mateuslgomes.model.Receitas;
 import br.com.mateuslgomes.repository.ReceitasRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.mateuslgomes.services.ReceitaServices;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/receitas")
 public class ReceitasController {
 
-    @Autowired
-    ReceitasRepository receitasRepository;
+    private final ReceitasRepository receitasRepository;
+
+    private final ReceitaServices receitaServices;
 
     @RequestMapping(path = "{id}")
     public ResponseEntity<Receitas> receita(@PathVariable Long id) {
         Optional<Receitas> receita = receitasRepository.findById(id);
         return receita.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @RequestMapping(path = "{ano}/{mes}")
+    public ResponseEntity<Receitas> receitaByDate(@PathVariable String ano, @PathVariable String mes) {
+        return ResponseEntity.ok().build();
     }
 
     @RequestMapping
@@ -36,33 +43,16 @@ public class ReceitasController {
 
     @DeleteMapping(path = "{id}")
     public ResponseEntity<Receitas> deleteReceita(@PathVariable Long id) {
-        Optional<Receitas> receita = receitasRepository.findById(id);
-        if (receita.isPresent()) {
-            receitasRepository.delete(receita.get());
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.badRequest().build();
+        return receitaServices.deleteReceita(id);
     }
 
     @PutMapping(path = "{id}")
     public ResponseEntity<Receitas> updateReceita(@PathVariable Long id, @RequestBody @Valid ReceitaDto dto) {
-        Receitas receita = dto.update(receitasRepository, id);
-        if (receita != null) {
-            receitasRepository.save(receita);
-            return ResponseEntity.ok(receita);
-        }
-        return ResponseEntity.badRequest().build();
+        return receitaServices.update(id, dto);
     }
 
     @PostMapping
     public ResponseEntity<Receitas> saveReceita(@RequestBody @Valid ReceitaDto dto, UriComponentsBuilder uriBuilder) {
-        try {
-            Receitas receitas = dto.gerarReceita();
-            receitasRepository.save(receitas);
-            URI uri = uriBuilder.path("/receitas").buildAndExpand(receitas.getId()).toUri();
-            return ResponseEntity.created(uri).body(receitas);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        return receitaServices.saveReceita(dto, uriBuilder);
     }
 }
